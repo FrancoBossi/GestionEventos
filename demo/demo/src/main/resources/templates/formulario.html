@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sistema de Reservas</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+<h1>Sistema de Reservas</h1>
+
+<div class="cuadro-eventos">
+    <h3>Eventos Disponibles y Horarios</h3>
+    <ul>
+        <li th:each="evento : ${eventos}">
+            <b th:text="${evento.key}"></b>
+            <ul>
+                <li th:each="h : ${evento.value.horarios}">
+                    <span th:text="|Turno: ${h.key}, Hora: ${h.value}|"></span>
+                </li>
+                <li th:each="e : ${evento.value.entradas}">
+                    <span th:text="|Tipo: ${e.key} - Disponibles: ${e.value}|"></span>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<!-- Formulario de reserva -->
+<div class="formulario">
+    <form method="post" th:action="@{/}">
+        <label>Nombre del cliente:</label><br>
+        <input type="text" name="nombre" th:value="${cliente.nombre}" required><br><br>
+
+        <label>Evento:</label><br>
+        <select id="evento" name="eventoSeleccionado" required onchange="actualizarOpciones()">
+            <option value="">-- Seleccionar evento --</option>
+            <option th:each="evento : ${eventos}"
+                    th:value="${evento.key}"
+                    th:text="${evento.key}"
+                    th:selected="${evento.key == eventoSeleccionado}">
+            </option>
+        </select><br><br>
+
+        <label>Horario:</label><br>
+        <select name="turno" id="horario" required>
+            <option th:each="h : ${horariosDisponibles}"
+                    th:value="${h.key}"
+                    th:text="|Turno: ${h.key}, Hora: ${h.value}|">
+            </option>
+        </select><br><br>
+
+        <label>Tipo de entrada:</label><br>
+        <select name="tipoEntrada" id="entrada" required>
+            <option th:each="e : ${entradasDisponibles}"
+                    th:value="${e.key}"
+                    th:text="|${e.key} - disponibles: ${e.value}|">
+            </option>
+        </select><br><br>
+
+        <label>Cantidad de entradas:</label><br>
+        <input type="number" name="cantidad" min="1" required><br><br>
+
+        <label>Nombre del asistente:</label><br>
+        <select name="nombreAsistente" required>
+            <option value="">-- Seleccionar asistente --</option>
+            <option th:each="a : ${asistentesDisponibles}"
+                    th:value="${a}"
+                    th:text="${a}">
+            </option>
+        </select><br><br>
+
+        <button type="submit">Reservar</button>
+    </form>
+
+    <p th:if="${reservaExitosa == true}" class="exito">✔ Reserva realizada con éxito.</p>
+    <p th:if="${reservaExitosa == false}" class="error">✘ No se pudo realizar la reserva. Verifique la disponibilidad o el asistente seleccionado.</p>
+</div>
+
+<!-- Tabla de reservas -->
+<h3>Reservas actuales</h3>
+<table>
+    <thead>
+    <tr>
+        <th>Cliente</th>
+        <th>Asistente</th>
+        <th>Tipo Entrada</th>
+        <th>Horario</th>
+        <th>Estado</th>
+        <th>Acción</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="r : ${reservas}">
+        <td th:text="${r.nombreCliente}"></td>
+        <td th:text="${r.nombreAsistente}"></td>
+        <td th:text="${r.tipoEntrada}"></td>
+        <td th:text="${r.horario}"></td>
+        <td th:text="${r.estado}"></td>
+        <td>
+            <form method="post" th:action="@{/confirmar}">
+                <input type="hidden" name="idReserva" th:value="${r.idReserva}">
+                <input type="hidden" name="eventoSeleccionado" th:value="${eventoSeleccionado}">
+                <button type="submit" th:if="${r.estado != 'Confirmada'}">Confirmar</button>
+            </form>
+
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Script para cargar dinámicamente entradas/horarios -->
+<script th:inline="javascript">
+    const eventos = /*[[${eventos}]]*/ {};
+
+    const entradaSelect = document.getElementById("entrada");
+    const horarioSelect = document.getElementById("horario");
+    const eventoSelect = document.getElementById("evento");
+
+    function actualizarOpciones() {
+        const eventoSeleccionado = eventoSelect.value;
+        entradaSelect.innerHTML = "";
+        horarioSelect.innerHTML = "";
+
+        if (!eventos[eventoSeleccionado]) return;
+
+        const evento = eventos[eventoSeleccionado];
+
+        // Cargar entradas
+        const entradas = evento.entradas;
+        for (const tipo in entradas) {
+            const option = document.createElement("option");
+            option.value = tipo;
+            option.text = `${tipo} - disponibles: ${entradas[tipo]}`;
+            entradaSelect.appendChild(option);
+        }
+
+        // Cargar horarios
+        const horarios = evento.horarios;
+        for (const turno in horarios) {
+            const option = document.createElement("option");
+            option.value = turno;
+            option.text = `Turno: ${turno}, Hora: ${horarios[turno]}`;
+            horarioSelect.appendChild(option);
+        }
+    }
+
+    // Auto cargar si ya hay seleccionado uno
+    window.onload = function () {
+        if (eventoSelect.value) {
+            actualizarOpciones();
+        }
+    }
+</script>
+
+</body>
+</html>

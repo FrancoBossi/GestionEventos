@@ -1,0 +1,67 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #121212;
+    color: #FFFFFF;
+    margin: 30px;
+}
+
+h1, h3 {
+    color: #1DB954;
+}
+
+.cuadro-eventos, .formulario, table {
+    background-color: #181818;
+    border: 1px solid #333;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+input, select, button {
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+input, select {
+    background-color: #2A2A2A;
+    color: white;
+}
+
+button {
+    background-color: #1DB954;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #1ed760;
+}
+
+.error {
+    color: #ff4c4c;
+}
+
+.exito {
+    color: #1DB954;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    color: white;
+}
+
+th, td {
+    border: 1px solid #333;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #222222;
+}
