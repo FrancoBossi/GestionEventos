@@ -8,7 +8,7 @@ Este proyecto consiste en un sistema de gestión de eventos y reservas, desarrol
 
 - **Entradas agotadas**: Cuando se agotan las entradas de un evento, el sistema impide realizar nuevas reservas, evitando así la sobreventa.
 
-- **Fidelización de clientes**: Para premiar la constancia, el sistema lleva un historial de asistencia de cada cliente. Una vez que un cliente asiste a 5 eventos, se le otorga una entrada gratuita para el siguiente evento.
+- **Fidelización de clientes**: Para premiar la constancia, el sistema lleva un historial de asistencia de cada cliente. Una vez que un cliente asiste a 5 eventos, se le otorga una entrada gratuita para el siguiente evento. En consola aparecerá un mensaje indicando que el cliente tiene derecho a una entrada gratuita.
 
 ## Cómo ejecutar la aplicación
 
