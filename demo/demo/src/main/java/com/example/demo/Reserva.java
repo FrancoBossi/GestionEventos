@@ -47,6 +47,7 @@ public class Reserva {
     public void cancelar() {
         this.estado = "Cancelada";
     }
+
     public String getNombreAsistente() {
         return nombreAsistente;
     }

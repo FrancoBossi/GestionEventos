@@ -16,8 +16,9 @@ Este proyecto consiste en un sistema de gestión de eventos y reservas, desarrol
 1. Abrir el proyecto en el IDE.
 2. Ejecutar con el botón *Run/Debug*. Esto levantará la aplicación.
 3. Acceder desde el navegador a `http://localhost:8080`.
+![img.png](img.png)
 
-### Opción 2: Desde la terminal
+### Opción 2: Desde la terminal (Esta opcion levanta la WEB)
 1. Posicionarse en el directorio raíz del proyecto.
 2. Ejecutar el siguiente comando:
    ```
@@ -27,7 +28,7 @@ Este proyecto consiste en un sistema de gestión de eventos y reservas, desarrol
 
 > **Nota:** Es necesario tener Java JDK 17 o superior instalado. Para verificarlo, ejecutar `java -version`.
 
-### Ejecución modo consola (modelo de reserva por línea de comandos)
+### Ejecución modo consola (esta opcion no levanta la web, modelo de reserva por línea de comandos en la terminal)
 
 1. Compilar el proyecto:
    ```
@@ -37,7 +38,9 @@ Este proyecto consiste en un sistema de gestión de eventos y reservas, desarrol
    ```
    java com.example.demo.Main
    ```
-3. "La mas simple": correr el Main con el boton Run del IDE.
+### "La mas simple": correr el Main con el boton Run del IDE. (Trabaja en la terminal)
+![img_1.png](img_1.png)
+
 ---
 
 ## Dependencias

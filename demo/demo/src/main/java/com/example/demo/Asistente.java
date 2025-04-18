@@ -82,7 +82,7 @@ public class Asistente implements Gestor_Eventos {
             }
         }
         if (clientesConDerecho.length() > 0) {
-            clientesConDerecho.setLength(clientesConDerecho.length() - 2); // Eliminar la última coma y espacio
+            clientesConDerecho.setLength(clientesConDerecho.length() - 2);
         }
         return clientesConDerecho.toString();
     }
