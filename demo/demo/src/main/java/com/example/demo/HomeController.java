@@ -25,7 +25,12 @@ public class HomeController {
         model.addAttribute("eventoSeleccionado", "");
         model.addAttribute("entradasDisponibles", Collections.emptyMap());
         model.addAttribute("horariosDisponibles", Collections.emptyMap());
-        model.addAttribute("reservas", Collections.emptyList());
+        Map<String, List<Reserva>> reservasPorEvento = new LinkedHashMap<>();
+        for (Map.Entry<String, Eventos> entry : eventosDisponibles.entrySet()) {
+            reservasPorEvento.put(entry.getKey(), entry.getValue().mostrarReservas());
+        }
+        model.addAttribute("reservasPorEvento", reservasPorEvento);
+
         model.addAttribute("reservaExitosa", null);
         model.addAttribute("asistentesDisponibles", asistente.getNombresAsistentes()); // nuevo
         return "formulario";
@@ -66,7 +71,12 @@ public class HomeController {
         model.addAttribute("eventoSeleccionado", eventoSeleccionado);
         model.addAttribute("entradasDisponibles", evento.getEntradas());
         model.addAttribute("horariosDisponibles", evento.getHorarios());
-        model.addAttribute("reservas", evento.mostrarReservas());
+        Map<String, List<Reserva>> reservasPorEvento = new LinkedHashMap<>();
+        for (Map.Entry<String, Eventos> entry : eventosDisponibles.entrySet()) {
+            reservasPorEvento.put(entry.getKey(), entry.getValue().mostrarReservas());
+        }
+        model.addAttribute("reservasPorEvento", reservasPorEvento);
+
         model.addAttribute("reservaExitosa", reservaExitosa);
         model.addAttribute("asistentesDisponibles", asistente.getNombresAsistentes());
 
@@ -88,14 +98,21 @@ public class HomeController {
         model.addAttribute("cliente", new Cliente());
         model.addAttribute("eventos", eventosDisponibles);
         model.addAttribute("eventoSeleccionado", eventoSeleccionado);
-        model.addAttribute("entradasDisponibles", evento.getEntradas());
-        model.addAttribute("horariosDisponibles", evento.getHorarios());
-        model.addAttribute("reservas", evento.mostrarReservas());
+        model.addAttribute("entradasDisponibles", evento != null ? evento.getEntradas() : Collections.emptyMap());
+        model.addAttribute("horariosDisponibles", evento != null ? evento.getHorarios() : Collections.emptyMap());
         model.addAttribute("reservaExitosa", null);
         model.addAttribute("asistentesDisponibles", asistente.getNombresAsistentes());
 
+
+        Map<String, List<Reserva>> reservasPorEvento = new LinkedHashMap<>();
+        for (Map.Entry<String, Eventos> entry : eventosDisponibles.entrySet()) {
+            reservasPorEvento.put(entry.getKey(), entry.getValue().mostrarReservas());
+        }
+        model.addAttribute("reservasPorEvento", reservasPorEvento);
+
         return "formulario";
     }
+
 }
 
 

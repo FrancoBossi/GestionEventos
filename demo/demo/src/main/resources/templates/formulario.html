@@ -79,36 +79,41 @@
 </div>
 
 <!-- Tabla de reservas -->
-<h3>Reservas actuales</h3>
-<table>
-    <thead>
-    <tr>
-        <th>Cliente</th>
-        <th>Asistente</th>
-        <th>Tipo Entrada</th>
-        <th>Horario</th>
-        <th>Estado</th>
-        <th>Acción</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="r : ${reservas}">
-        <td th:text="${r.nombreCliente}"></td>
-        <td th:text="${r.nombreAsistente}"></td>
-        <td th:text="${r.tipoEntrada}"></td>
-        <td th:text="${r.horario}"></td>
-        <td th:text="${r.estado}"></td>
-        <td>
-            <form method="post" th:action="@{/confirmar}">
-                <input type="hidden" name="idReserva" th:value="${r.idReserva}">
-                <input type="hidden" name="eventoSeleccionado" th:value="${eventoSeleccionado}">
-                <button type="submit" th:if="${r.estado != 'Confirmada'}">Confirmar</button>
-            </form>
+<h3>Reservas actuales por evento</h3>
 
-        </td>
-    </tr>
-    </tbody>
-</table>
+<div th:each="entry : ${reservasPorEvento}">
+    <h4 th:text="|Evento: ${entry.key}|"></h4>
+    <table>
+        <thead>
+        <tr>
+            <th>Cliente</th>
+            <th>Asistente</th>
+            <th>Tipo Entrada</th>
+            <th>Horario</th>
+            <th>Estado</th>
+            <th>Acción</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="r : ${entry.value}">
+            <td th:text="${r.nombreCliente}"></td>
+            <td th:text="${r.nombreAsistente}"></td>
+            <td th:text="${r.tipoEntrada}"></td>
+            <td th:text="${r.horario}"></td>
+            <td th:text="${r.estado}"></td>
+            <td>
+                <form method="post" th:action="@{/confirmar}">
+                    <input type="hidden" name="idReserva" th:value="${r.idReserva}">
+                    <input type="hidden" name="eventoSeleccionado" th:value="${entry.key}">
+                    <button type="submit" th:if="${r.estado != 'Confirmada'}">Confirmar</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+</div>
+
 
 <!-- Script para cargar dinámicamente entradas/horarios -->
 <script th:inline="javascript">
